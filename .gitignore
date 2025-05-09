@@ -1,0 +1,23 @@
+# Node modules
+node_modules/
+
+# OSU MySQL creds or any local config files (if separated)
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Mac system files
+.DS_Store
+
+# VSCode settings (optional)
+.vscode/
+
+# OSU Engineering environment specific
+*.swp
+*.swo
+
+# Compiled templates or caches (if used)
+*.handlebars.js

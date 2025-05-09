@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db/db-connect');
+const db = require('../db-connector');
 
 router.get('/', async (req, res) => {
   const [students] = await db.query('SELECT * FROM Students');

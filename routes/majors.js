@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db/db-connect');
+const db = require('../db-connector');
 
 router.get('/', async (req, res) => {
   const [majors] = await db.query('SELECT * FROM Majors');

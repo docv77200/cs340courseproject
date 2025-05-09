@@ -3,7 +3,7 @@
 */
 const express = require('express');
 const app = express();
-const PORT = 4006;
+const PORT = 3036;
 
 const db = require('./db-connector');
 

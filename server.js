@@ -7,21 +7,21 @@ const PORT = 3036;
 
 const db = require('./db-connector');
 
-// Handlebars
+// Handlebars setup
 const exphbs = require('express-handlebars');
 
-// Static Files
+// Middleware
 app.use(express.static('public'));
-
-// Middleware for POST
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-/*
-    VIEW ENGINE
-*/
-app.engine('.hbs', exphbs.engine({ extname: '.hbs' }));
+// View engine config
+app.engine('.hbs', exphbs.engine({
+    extname: '.hbs',
+    defaultLayout: 'main', // make sure views/layouts/main.hbs exists
+}));
 app.set('view engine', '.hbs');
+app.set('views', './views'); // ensure your views are under /views
 
 /*
     ROUTES
@@ -38,19 +38,19 @@ app.use('/sections', sectionsRouter);
 app.use('/instructors', instructorsRouter);
 app.use('/majors', majorsRouter);
 
-// Default Home Page
+// Home route
 app.get('/', (req, res) => {
-    res.render('home'); // Add home.hbs in /views
+    res.render('home'); // views/home.hbs
 });
 
 // 404 handler
 app.use((req, res) => {
-    res.status(404).send('<h1>404: Page Not Found</h1>');
+    res.status(404).render('404'); // optional: views/404.hbs
 });
 
 /*
-    LISTENER
+    START SERVER
 */
 app.listen(PORT, () => {
-    console.log(`Server running at http://classwork.engr.oregonstate.edu:${PORT}`);
+    console.log(`✅ Server running locally at http://localhost:${PORT}`);
 });

@@ -1,42 +1,56 @@
 /*
     SETUP
 */
-
 const express = require('express');
 const app = express();
-const PORT = 3002; // <-- Use any number between 1025–65535 that isn't in use
+const PORT = 3006;
 
 const db = require('./db-connector');
 
+// Handlebars
+const exphbs = require('express-handlebars');
+
+// Static Files
+app.use(express.static('public'));
+
+// Middleware for POST
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+/*
+    VIEW ENGINE
+*/
+app.engine('.hbs', exphbs.engine({ extname: '.hbs' }));
+app.set('view engine', '.hbs');
 
 /*
     ROUTES
 */
+const studentsRouter = require('./routes/students');
+const coursesRouter = require('./routes/courses');
+const sectionsRouter = require('./routes/sections');
+const instructorsRouter = require('./routes/instructors');
+const majorsRouter = require('./routes/majors');
 
-app.get('/', async function (req, res) {
-    try {
-        const query1 = 'DROP TABLE IF EXISTS diagnostic;';
-        const query2 = 'CREATE TABLE diagnostic(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(255) NOT NULL);';
-        const query3 = 'INSERT INTO diagnostic (text) VALUES ("MySQL and Node is working for vickerdr!");';
-        const query4 = 'SELECT * FROM diagnostic;';
+app.use('/students', studentsRouter);
+app.use('/courses', coursesRouter);
+app.use('/sections', sectionsRouter);
+app.use('/instructors', instructorsRouter);
+app.use('/majors', majorsRouter);
 
-        await db.query(query1);
-        await db.query(query2);
-        await db.query(query3);
-        const [rows] = await db.query(query4);
-
-        res.send("<h1>MySQL Results:</h1>" + JSON.stringify(rows));
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("An error occurred while running queries.");
-    }
+// Default Home Page
+app.get('/', (req, res) => {
+    res.render('home'); // Add home.hbs in /views
 });
 
+// 404 handler
+app.use((req, res) => {
+    res.status(404).send('<h1>404: Page Not Found</h1>');
+});
 
 /*
     LISTENER
 */
-
-app.listen(PORT, function () {
-    console.log('Server started at http://classwork.engr.oregonstate.edu:' + PORT);
+app.listen(PORT, () => {
+    console.log(`Server running at http://classwork.engr.oregonstate.edu:${PORT}`);
 });

@@ -16,11 +16,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // View engine config
-app.engine('.hbs', exphbs.engine({
-    extname: '.hbs',
-    defaultLayout: 'main', // make sure views/layouts/main.hbs exists
+app.engine('handlebars', exphbs.engine({
+    extname: '.handlebars',
+    defaultLayout: 'main',
+    layoutsDir: 'views/layouts'
 }));
-app.set('view engine', '.hbs');
+app.set('view engine', 'handlebars');
 app.set('views', './views'); // ensure your views are under /views
 
 /*

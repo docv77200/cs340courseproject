@@ -44,10 +44,6 @@ app.get('/', (req, res) => {
     res.render('home'); // views/home.hbs
 });
 
-// 404 handler
-app.use((req, res) => {
-    res.status(404).render('404'); // optional: views/404.hbs
-});
 
 /*
     START SERVER

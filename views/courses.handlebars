@@ -1,0 +1,24 @@
+<h1>Courses</h1>
+
+<table>
+  <thead>
+    <tr><th>ID</th><th>Name</th><th>Delete</th></tr>
+  </thead>
+  <tbody>
+    {{#each courses}}
+      <tr>
+        <td>{{this.courseID}}</td>
+        <td>{{this.name}}</td>
+        <td><a href="/courses/delete/{{this.courseID}}" onclick="return confirm('Delete this course?')">Delete</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<hr>
+
+<h2>Add Course</h2>
+<form action="/courses/add" method="POST">
+  <input type="text" name="name" placeholder="Course Name" required>
+  <button type="submit">Add</button>
+</form>

@@ -1,0 +1,24 @@
+<h1>Majors</h1>
+
+<table>
+  <thead>
+    <tr><th>ID</th><th>Name</th><th>Delete</th></tr>
+  </thead>
+  <tbody>
+    {{#each majors}}
+      <tr>
+        <td>{{this.majorID}}</td>
+        <td>{{this.name}}</td>
+        <td><a href="/majors/delete/{{this.majorID}}" onclick="return confirm('Delete this major?')">Delete</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<hr>
+
+<h2>Add Major</h2>
+<form action="/majors/add" method="POST">
+  <input type="text" name="name" placeholder="Major Name" required>
+  <button type="submit">Add</button>
+</form>

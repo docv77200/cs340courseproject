@@ -1,5 +1,5 @@
-import express from 'express';
-import db from '../db-connector.js';
+const express = require('express');
+const db = require('../db-connector.js');
 
 const router = express.Router();
 
@@ -58,4 +58,4 @@ router.get('/delete', async (req, res) => {
   res.redirect('/enrollments');
 });
 
-export default router;
+module.exports = router;

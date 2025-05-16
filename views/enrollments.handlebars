@@ -1,0 +1,41 @@
+<h2>Enrollments</h2>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Student</th>
+      <th>Course Section</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each enrollments}}
+      <tr>
+        <td>{{this.first_name}} {{this.last_name}}</td>
+        <td>{{this.course_name}} - Section {{this.section_number}}</td>
+        <td>
+          <a href="/enrollments/delete?student_id={{this.student_id}}&section_id={{this.section_id}}">Delete</a>
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<h3>Add Enrollment</h3>
+<form method="POST" action="/enrollments/add">
+  <label for="student_id">Student:</label>
+  <select name="student_id" required>
+    {{#each students}}
+      <option value="{{this.student_id}}">{{this.name}}</option>
+    {{/each}}
+  </select>
+
+  <label for="section_id">Section:</label>
+  <select name="section_id" required>
+    {{#each sections}}
+      <option value="{{this.section_id}}">{{this.label}}</option>
+    {{/each}}
+  </select>
+
+  <button type="submit">Enroll</button>
+</form>

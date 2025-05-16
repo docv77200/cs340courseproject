@@ -32,12 +32,14 @@ const coursesRouter = require('./routes/courses');
 const sectionsRouter = require('./routes/sections');
 const instructorsRouter = require('./routes/instructors');
 const majorsRouter = require('./routes/majors');
+const enrollmentsRouter = require('./routes/enrollments');
 
 app.use('/students', studentsRouter);
 app.use('/courses', coursesRouter);
 app.use('/sections', sectionsRouter);
 app.use('/instructors', instructorsRouter);
 app.use('/majors', majorsRouter);
+app.use('/enrollments', enrollmentsRouter);
 
 // Home route
 app.get('/', (req, res) => {

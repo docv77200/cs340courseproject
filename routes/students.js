@@ -16,6 +16,24 @@ router.post('/add', async (req, res) => {
   res.redirect('/students');
 });
 
+router.post('/update', async (req, res) => {
+  const { student_id, first_name, last_name, email, standing } = req.body;
+
+  const updateQuery = `
+    UPDATE Students
+    SET first_name = ?, last_name = ?, email = ?, class_standing = ?
+    WHERE student_id = ?
+  `;
+
+  try {
+    await db.pool.query(updateQuery, [first_name, last_name, email, standing, student_id]);
+    res.redirect('/students');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error updating student');
+  }
+});
+
 router.get('/delete/:id', async (req, res) => {
   await db.query('DELETE FROM Students WHERE studentID = ?', [req.params.id]);
   res.redirect('/students');

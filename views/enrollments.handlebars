@@ -4,17 +4,40 @@
   <thead>
     <tr>
       <th>Student</th>
-      <th>Course Section</th>
-      <th>Action</th>
+      <th>Section</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     {{#each enrollments}}
       <tr>
-        <td>{{this.first_name}} {{this.last_name}}</td>
-        <td>{{this.course_name}} - Section {{this.section_number}}</td>
+        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td>{{this.courseName}} - Section {{this.sectionNumber}}</td>
         <td>
-          <a href="/enrollments/delete?student_id={{this.student_id}}&section_id={{this.section_id}}">Delete</a>
+          <a href="/enrollments/delete?student_id={{this.studentID}}&section_id={{this.sectionID}}"
+             onclick="return confirm('Are you sure?')">Delete</a>
+
+          <form method="POST" action="/enrollments/update" style="margin-top: 10px;">
+            <input type="hidden" name="enrollment_id" value="{{this.enrollmentID}}" />
+
+            <select name="student_id">
+              {{#each ../students}}
+                <option value="{{this.studentID}}" {{#ifCond this.studentID '==' ../studentID}}selected{{/ifCond}}>
+                  {{this.name}}
+                </option>
+              {{/each}}
+            </select>
+
+            <select name="section_id">
+              {{#each ../sections}}
+                <option value="{{this.section_id}}" {{#ifCond this.section_id '==' ../sectionID}}selected{{/ifCond}}>
+                  {{this.label}}
+                </option>
+              {{/each}}
+            </select>
+
+            <button type="submit">Update</button>
+          </form>
         </td>
       </tr>
     {{/each}}
@@ -26,7 +49,7 @@
   <label for="student_id">Student:</label>
   <select name="student_id" required>
     {{#each students}}
-      <option value="{{this.student_id}}">{{this.name}}</option>
+      <option value="{{this.studentID}}">{{this.name}}</option>
     {{/each}}
   </select>
 

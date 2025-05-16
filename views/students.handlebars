@@ -3,17 +3,36 @@
 <table>
   <thead>
     <tr>
-      <th>ID</th><th>Name</th><th>Email</th><th>Class Standing</th><th>Delete</th>
+      <th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Class Standing</th><th>Actions</th>
     </tr>
   </thead>
   <tbody>
     {{#each students}}
       <tr>
         <td>{{this.studentID}}</td>
-        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td>{{this.firstName}}</td>
+        <td>{{this.lastName}}</td>
         <td>{{this.email}}</td>
         <td>{{this.classStanding}}</td>
-        <td><a href="/students/delete/{{this.studentID}}" onclick="return confirm('Delete this student?')">Delete</a></td>
+        <td>
+          <!-- DELETE -->
+          <a href="/students/delete/{{this.studentID}}" onclick="return confirm('Delete this student?')">Delete</a>
+
+          <!-- UPDATE FORM -->
+          <form method="POST" action="/students/update" style="margin-top: 5px;">
+            <input type="hidden" name="student_id" value="{{this.studentID}}" />
+            <input type="text" name="first_name" value="{{this.firstName}}" required />
+            <input type="text" name="last_name" value="{{this.lastName}}" required />
+            <input type="email" name="email" value="{{this.email}}" required />
+            <select name="class_standing">
+              <option value="Freshman" {{#ifCond this.classStanding '==' 'Freshman'}}selected{{/ifCond}}>Freshman</option>
+              <option value="Sophomore" {{#ifCond this.classStanding '==' 'Sophomore'}}selected{{/ifCond}}>Sophomore</option>
+              <option value="Junior" {{#ifCond this.classStanding '==' 'Junior'}}selected{{/ifCond}}>Junior</option>
+              <option value="Senior" {{#ifCond this.classStanding '==' 'Senior'}}selected{{/ifCond}}>Senior</option>
+            </select>
+            <button type="submit">Update</button>
+          </form>
+        </td>
       </tr>
     {{/each}}
   </tbody>

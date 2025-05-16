@@ -32,6 +32,25 @@ router.post('/add', async (req, res) => {
   res.redirect('/enrollments');
 });
 
+// Update enrollment
+router.post('/update', async (req, res) => {
+    const { enrollment_id, student_id, section_id } = req.body;
+  
+    const updateQuery = `
+      UPDATE Enrollments
+      SET studentID = ?, sectionID = ?
+      WHERE enrollmentID = ?
+    `;
+  
+    try {
+      await db.query(updateQuery, [student_id, section_id, enrollment_id]);
+      res.redirect('/enrollments');
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Failed to update enrollment');
+    }
+  });
+
 // DELETE an enrollment
 router.get('/delete', async (req, res) => {
   const { student_id, section_id } = req.query;

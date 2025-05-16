@@ -19,11 +19,18 @@ app.use(express.json());
 app.engine('handlebars', exphbs.engine({
     extname: '.handlebars',
     defaultLayout: 'main',
-    layoutsDir: 'views/layouts'
-}));
-app.set('view engine', 'handlebars');
-app.set('views', './views'); // ensure your views are under /views
-
+    layoutsDir: 'views/layouts',
+    helpers: {
+      ifCond: function (v1, operator, v2, options) {
+        switch (operator) {
+          case '==': return (v1 == v2) ? options.fn(this) : options.inverse(this);
+          case '===': return (v1 === v2) ? options.fn(this) : options.inverse(this);
+          case '!=': return (v1 != v2) ? options.fn(this) : options.inverse(this);
+          default: return options.inverse(this);
+        }
+      }
+    }
+  }));
 /*
     ROUTES
 */
@@ -45,6 +52,8 @@ app.use('/enrollments', enrollmentsRouter);
 app.get('/', (req, res) => {
     res.render('home'); // views/home.hbs
 });
+
+
 
 
 /*

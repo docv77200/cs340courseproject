@@ -17,7 +17,7 @@
         <td>
           <!-- DELETE -->
           <a href="/students/delete/{{this.studentID}}" onclick="return confirm('Delete this student?')">Delete</a>
-
+          <a href="/delete-demo-student" class="btn btn-warning">Delete Demo Student</a>
           <!-- UPDATE FORM -->
           <form method="POST" action="/students/update" style="margin-top: 5px;">
             <input type="hidden" name="student_id" value="{{this.studentID}}" />

@@ -39,4 +39,14 @@ router.get('/delete/:id', async (req, res) => {
   res.redirect('/students');
 });
 
+app.get('/delete-demo-student', async (req, res) => {
+  try {
+    await db.query('CALL sp_delete_demo_student();');
+    res.redirect('/students');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Failed to delete demo student');
+  }
+});
+
 module.exports = router;

@@ -122,3 +122,12 @@ BEGIN
 END //
 
 DELIMITER;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_delete_demo_student()
+BEGIN
+    DELETE FROM Students WHERE studentID = 1004;
+END //
+
+DELIMITER ;

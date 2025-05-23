@@ -52,8 +52,16 @@ app.use('/enrollments', enrollmentsRouter);
 app.get('/', (req, res) => {
     res.render('home'); // views/home.hbs
 });
-
-
+//reset route
+app.get('/reset-db', async (req, res) => {
+  try {
+    await db.query('CALL sp_reset_db();');
+    res.redirect('/');
+  } catch (err) {
+    console.error('RESET DB Error:', err);
+    res.status(500).send('DB reset failed.');
+  }
+});
 
 
 /*

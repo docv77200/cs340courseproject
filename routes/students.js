@@ -39,7 +39,7 @@ router.get('/delete/:id', async (req, res) => {
   res.redirect('/students');
 });
 
-app.get('/delete-demo-student', async (req, res) => {
+router.get('/delete-demo-student', async (req, res) => {
   try {
     await db.query('CALL sp_delete_demo_student();');
     res.redirect('/students');

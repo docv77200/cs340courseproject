@@ -2,18 +2,30 @@
 
 <table>
   <thead>
-    <tr>
-      <th>ID</th><th>Name</th><th>Department</th><th>Email</th><th>Delete</th>
-    </tr>
+    <tr><th>ID</th><th>First</th><th>Last</th><th>Department</th><th>Email</th><th>Actions</th></tr>
   </thead>
   <tbody>
     {{#each instructors}}
       <tr>
         <td>{{this.instructorID}}</td>
-        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td>{{this.firstName}}</td>
+        <td>{{this.lastName}}</td>
         <td>{{this.department}}</td>
         <td>{{this.email}}</td>
-        <td><a href="/instructors/delete/{{this.instructorID}}" onclick="return confirm('Delete this instructor?')">Delete</a></td>
+        <td>
+          <!-- DELETE -->
+          <a href="/instructors/delete/{{this.instructorID}}" onclick="return confirm('Delete this instructor?')">Delete</a>
+
+          <!-- UPDATE FORM -->
+          <form method="POST" action="/instructors/update" style="margin-top: 5px;">
+            <input type="hidden" name="instructorID" value="{{this.instructorID}}" />
+            <input type="text" name="firstName" value="{{this.firstName}}" required />
+            <input type="text" name="lastName" value="{{this.lastName}}" required />
+            <input type="text" name="department" value="{{this.department}}" required />
+            <input type="email" name="email" value="{{this.email}}" required />
+            <button type="submit">Update</button>
+          </form>
+        </td>
       </tr>
     {{/each}}
   </tbody>

@@ -21,4 +21,14 @@ router.get('/delete/:id', async (req, res) => {
   res.redirect('/instructors');
 });
 
+router.post('/update', async (req, res) => {
+  const { instructorID, firstName, lastName, department, email } = req.body;
+  await db.query(
+    `UPDATE Instructors SET firstName = ?, lastName = ?, department = ?, email = ? WHERE instructorID = ?`,
+    [firstName, lastName, department, email, instructorID]
+  );
+  res.redirect('/instructors');
+});
+
+
 module.exports = router;

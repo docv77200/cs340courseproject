@@ -1,16 +1,9 @@
 <h1>Sections</h1>
 
-<!-- Display sections in a table -->
 <table>
   <thead>
     <tr>
-      <th>Section ID</th>
-      <th>Course</th>
-      <th>Instructor</th>
-      <th>Building</th>
-      <th>Room</th>
-      <th>Schedule</th>
-      <th>Delete</th>
+      <th>Section ID</th><th>Course</th><th>Instructor</th><th>Building</th><th>Room</th><th>Schedule</th><th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -23,7 +16,30 @@
         <td>{{this.roomNumber}}</td>
         <td>{{this.schedule}}</td>
         <td>
+          <!-- DELETE -->
           <a href="/sections/delete/{{this.sectionID}}" onclick="return confirm('Are you sure?')">Delete</a>
+
+          <!-- UPDATE FORM -->
+          <form method="POST" action="/sections/update" style="margin-top: 5px;">
+            <input type="hidden" name="sectionID" value="{{this.sectionID}}" />
+
+            <select name="courseID">
+              {{#each ../courses}}
+                <option value="{{this.courseID}}" {{#ifCond this.courseID '==' ../this.courseID}}selected{{/ifCond}}>{{this.name}}</option>
+              {{/each}}
+            </select>
+
+            <select name="instructorID">
+              {{#each ../instructors}}
+                <option value="{{this.instructorID}}" {{#ifCond this.instructorID '==' ../this.instructorID}}selected{{/ifCond}}>{{this.firstName}} {{this.lastName}}</option>
+              {{/each}}
+            </select>
+
+            <input type="text" name="building" value="{{this.building}}" required />
+            <input type="text" name="roomNumber" value="{{this.roomNumber}}" required />
+            <input type="text" name="schedule" value="{{this.schedule}}" required />
+            <button type="submit">Update</button>
+          </form>
         </td>
       </tr>
     {{/each}}
@@ -32,12 +48,10 @@
 
 <hr>
 
-<!-- Form to add a new section -->
 <h2>Add Section</h2>
 <form action="/sections/add" method="POST">
   <label>Course:</label>
   <select name="courseID" required>
-    <option value="" disabled selected>Select Course</option>
     {{#each courses}}
       <option value="{{this.courseID}}">{{this.name}}</option>
     {{/each}}
@@ -45,11 +59,8 @@
 
   <label>Instructor:</label>
   <select name="instructorID" required>
-    <option value="" disabled selected>Select Instructor</option>
     {{#each instructors}}
-      <option value="{{this.instructorID}}">
-        {{this.firstName}} {{this.lastName}}
-      </option>
+      <option value="{{this.instructorID}}">{{this.firstName}} {{this.lastName}}</option>
     {{/each}}
   </select><br><br>
 

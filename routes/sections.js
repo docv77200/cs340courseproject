@@ -40,5 +40,17 @@ router.get('/delete/:id', async (req, res) => {
   await db.query('DELETE FROM Sections WHERE sectionID = ?', [req.params.id]);
   res.redirect('/sections');
 });
+// Update
+router.post('/update', async (req, res) => {
+  const { sectionID, courseID, instructorID, building, roomNumber, schedule } = req.body;
+  await db.query(
+    `UPDATE Sections
+     SET courseID = ?, instructorID = ?, building = ?, roomNumber = ?, schedule = ?
+     WHERE sectionID = ?`,
+    [courseID, instructorID, building, roomNumber, schedule, sectionID]
+  );
+  res.redirect('/sections');
+});
+
 
 module.exports = router;

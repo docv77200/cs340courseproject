@@ -2,14 +2,24 @@
 
 <table>
   <thead>
-    <tr><th>ID</th><th>Name</th><th>Delete</th></tr>
+    <tr><th>ID</th><th>Name</th><th>Actions</th></tr>
   </thead>
   <tbody>
     {{#each courses}}
       <tr>
         <td>{{this.courseID}}</td>
         <td>{{this.name}}</td>
-        <td><a href="/courses/delete/{{this.courseID}}" onclick="return confirm('Delete this course?')">Delete</a></td>
+        <td>
+          <!-- DELETE -->
+          <a href="/courses/delete/{{this.courseID}}" onclick="return confirm('Delete this course?')">Delete</a>
+
+          <!-- UPDATE FORM -->
+          <form method="POST" action="/courses/update" style="margin-top: 5px;">
+            <input type="hidden" name="courseID" value="{{this.courseID}}" />
+            <input type="text" name="name" value="{{this.name}}" required />
+            <button type="submit">Update</button>
+          </form>
+        </td>
       </tr>
     {{/each}}
   </tbody>

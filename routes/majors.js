@@ -18,4 +18,11 @@ router.get('/delete/:id', async (req, res) => {
   res.redirect('/majors');
 });
 
+router.post('/update', async (req, res) => {
+  const { majorID, name } = req.body;
+  await db.query('UPDATE Majors SET name = ? WHERE majorID = ?', [name, majorID]);
+  res.redirect('/majors');
+});
+
+
 module.exports = router;

@@ -17,5 +17,11 @@ router.get('/delete/:id', async (req, res) => {
   await db.query('DELETE FROM Courses WHERE courseID = ?', [req.params.id]);
   res.redirect('/courses');
 });
+router.post('/update', async (req, res) => {
+  const { courseID, name } = req.body;
+  await db.query('UPDATE Courses SET name = ? WHERE courseID = ?', [name, courseID]);
+  res.redirect('/courses');
+});
+
 
 module.exports = router;

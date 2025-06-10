@@ -15,11 +15,34 @@ router.post('/add', async (req, res) => {
   );
   res.redirect('/instructors');
 });
-
+// delete
 router.get('/delete/:id', async (req, res) => {
-  await db.query('DELETE FROM Instructors WHERE instructorID = ?', [req.params.id]);
-  res.redirect('/instructors');
+  const instructorID = req.params.id;
+
+  try {
+    // Check if instructor is assigned to any sections
+    const [[{ count }]] = await db.query(
+      'SELECT COUNT(*) AS count FROM Sections WHERE instructorID = ?',
+      [instructorID]
+    );
+
+    if (count > 0) {
+      // Render a page or redirect with a user-friendly error
+      return res.status(400).send(
+        'Instructor is attached to one or more sections. Please update those sections before deleting this instructor.'
+      );
+    }
+
+    // If safe, proceed with delete
+    await db.query('DELETE FROM Instructors WHERE instructorID = ?', [instructorID]);
+    res.redirect('/instructors');
+
+  } catch (err) {
+    console.error('Delete instructor failed:', err);
+    res.status(500).send('Server error while attempting to delete instructor.');
+  }
 });
+
 
 router.post('/update', async (req, res) => {
   const { instructorID, firstName, lastName, department, email } = req.body;
